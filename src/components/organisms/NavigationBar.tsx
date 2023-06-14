@@ -16,11 +16,15 @@ const NavigationBar: React.FC = () => {
         return (
           <div
             key={navigation.name}
-            className={`tw-flex tw-flex-col tw-items-center tw-gap-1 ${isSelected ? 'tw-text-yellow-500' : ''}`}
+            className={`tw-flex tw-flex-col tw-items-center tw-gap-1 ${
+              isSelected ? 'tw-text-yellow-500' : ''
+            } tw-cursor-pointer`}
             onClick={() => handleClick(navigation.link)}
           >
             <div>{filledIcon}</div>
-            <div className="tw-text-white-500 tw-text-center tw-text-xs tw-font-medium">{navigation.name}</div>
+            <div className="tw-text-white-500 tw-text-center tw-text-xs tw-font-medium">
+              {navigation.name}
+            </div>
           </div>
         );
       })}

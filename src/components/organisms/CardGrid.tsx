@@ -1,102 +1,30 @@
 import React from 'react';
 import Card from '../molecules/Card';
+import Loader from '../atoms/Loader';
 
-const CardGrid: React.FC = () => {
-  const data = [
-    {
-      title: 'Fast & Furious 9 (2021)',
-      description: 'description1',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title2',
-      description: 'description2',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      image:
-        'https://www.themoviedb.org/t/p/w1280/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-      rating: 4.5,
-    },
-  ];
+type Props = {
+  data: ITrending[];
+  isLoading?: boolean;
+};
+
+const CardGrid: React.FC<Props> = ({ data, isLoading }) => {
+  if (isLoading) return <Loader />;
 
   return (
-    <div className="tw-grid tw-grid-cols-2 tw-gap-4 sm:tw-grid-cols-3 lg:tw-grid-cols-4">
-      {data.map((item, index) => (
-        <div className="tw-flex-shrink-1 tw-flex" key={index}>
-          <Card type="grid" {...item} />
+    <>
+      {data.length === 0 && (
+        <div className="tw-mt-10 tw-flex tw-h-full tw-items-center tw-justify-center tw-text-sm">
+          There are no movies that matched your query.
         </div>
-      ))}
-    </div>
+      )}
+      <div className="tw-grid tw-grid-cols-2 tw-gap-4 sm:tw-grid-cols-3 lg:tw-grid-cols-4">
+        {data.map((item, index) => (
+          <div className="tw-flex-shrink-1 tw-flex" key={index}>
+            <Card type="grid" {...item} />
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

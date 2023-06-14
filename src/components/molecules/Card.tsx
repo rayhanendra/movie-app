@@ -22,6 +22,7 @@ const Card: React.FC<Props> = ({ type = 'list', title, image, rating }) => {
         className="tw-absolute -tw-z-10 tw-h-full tw-w-full tw-rounded-xl tw-object-cover"
         src={image}
         alt={title}
+        loading="lazy"
       />
       <div className="tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-z-10 tw-rounded-b-xl tw-bg-slate-300 tw-bg-opacity-5 tw-p-2 tw-backdrop-blur-md tw-backdrop-filter">
         <div className="tw-truncate tw-text-sm tw-font-bold md:tw-text-lg">
