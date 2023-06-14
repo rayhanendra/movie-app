@@ -7,7 +7,7 @@ const Trending = () => {
     queryKey: ['trending'],
     queryFn: movieService.getTrending,
     select(data) {
-      const items = data.data.results.map((item: IGetTrending) => ({
+      const items = data.data.results.map((item: IMovieItem) => ({
         id: item.id,
         title: item.title,
         image: `https://www.themoviedb.org/t/p/w1280${item.backdrop_path}`,
@@ -16,6 +16,7 @@ const Trending = () => {
 
       return items;
     },
+    keepPreviousData: true,
   });
 
   if (isLoading) return <div>Loading...</div>;

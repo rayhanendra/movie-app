@@ -1,5 +1,5 @@
 import { useDebounce } from '@/hooks/useDebounce';
-import React, { useEffect } from 'react';
+import React from 'react';
 import InputSearch from '@/components/molecules/InputSearch';
 import movieService from '@/services/movie.service';
 import { useQuery } from '@tanstack/react-query';
@@ -68,7 +68,7 @@ const useSearchQuery = (
 // Note: Hook for search and return search results
 const useSearch = (debouncedSearch: string, page: number) =>
   useSearchQuery({ debouncedSearch, page }, (data) => {
-    const items = data.data.results.map((item: IGetTrending) => ({
+    const items = data.data.results.map((item: IMovieItem) => ({
       id: item.id,
       title: item.title,
       image: `https://www.themoviedb.org/t/p/w1280${item.backdrop_path}`,
