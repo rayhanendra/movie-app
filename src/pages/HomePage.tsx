@@ -5,9 +5,6 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <Trending />
-      <Trending />
-      <Trending />
-      <Trending />
     </div>
   );
 };
