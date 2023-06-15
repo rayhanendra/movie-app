@@ -3,7 +3,24 @@ import { useQuery } from '@tanstack/react-query';
 import movieService from '@/services/movie.service';
 
 const Trending = () => {
-  const { isLoading, data } = useQuery({
+  const { isLoading, data } = useTrendingQuery();
+
+  if (isLoading) return <div data-testid="trending-loading">Loading...</div>;
+
+  return (
+    <div className="tw-px-4">
+      <div className="tw-text-white-900 tw-py-4 tw-text-base tw-font-bold md:tw-text-lg">
+        Trending
+      </div>
+      <div>
+        <CardList name="trending" data={data} />
+      </div>
+    </div>
+  );
+};
+
+export const useTrendingQuery = () =>
+  useQuery({
     queryKey: ['trending'],
     queryFn: movieService.getTrending,
     select(data) {
@@ -18,19 +35,5 @@ const Trending = () => {
     },
     keepPreviousData: true,
   });
-
-  if (isLoading) return <div>Loading...</div>;
-
-  return (
-    <div className="tw-px-4">
-      <div className="tw-text-white-900 tw-py-4 tw-text-base tw-font-bold md:tw-text-lg">
-        Trending
-      </div>
-      <div>
-        <CardList data={data} />
-      </div>
-    </div>
-  );
-};
 
 export default Trending;

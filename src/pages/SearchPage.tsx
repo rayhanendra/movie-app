@@ -19,7 +19,7 @@ function SearchPage() {
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(search);
+    setSearch(e.currentTarget.search.value);
   };
 
   return (
@@ -66,7 +66,7 @@ const useSearchQuery = (
   });
 
 // Note: Hook for search and return search results
-const useSearch = (debouncedSearch: string, page: number) =>
+export const useSearch = (debouncedSearch: string, page: number) =>
   useSearchQuery({ debouncedSearch, page }, (data) => {
     const items = data.data.results.map((item: IMovieItem) => ({
       id: item.id,

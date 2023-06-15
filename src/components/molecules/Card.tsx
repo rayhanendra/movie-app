@@ -2,12 +2,19 @@ import React from 'react';
 import { StarIcon } from 'lucide-react';
 
 type Props = {
+  name?: string;
   type?: 'list' | 'grid';
   title: string;
   image: string;
   rating: number;
 };
-const Card: React.FC<Props> = ({ type = 'list', title, image, rating }) => {
+const Card: React.FC<Props> = ({
+  name,
+  type = 'list',
+  title,
+  image,
+  rating,
+}) => {
   return (
     <div
       className={`${
@@ -25,7 +32,10 @@ const Card: React.FC<Props> = ({ type = 'list', title, image, rating }) => {
         loading="lazy"
       />
       <div className="tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-z-10 tw-rounded-b-xl tw-bg-slate-300 tw-bg-opacity-5 tw-p-2 tw-backdrop-blur-md tw-backdrop-filter">
-        <div className="tw-truncate tw-text-sm tw-font-bold md:tw-text-lg">
+        <div
+          data-testid={`${name}-title`}
+          className="tw-truncate tw-text-sm tw-font-bold md:tw-text-lg"
+        >
           {title}
         </div>
         <div className="tw-flex tw-items-center tw-gap-1">

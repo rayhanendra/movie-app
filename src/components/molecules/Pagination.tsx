@@ -16,6 +16,7 @@ const Pagination: React.FC<Props> = ({ activePage, pages, setActivePage }) => {
     for (let i = startPage; i <= endPage; i++) {
       elements.push(
         <div
+          role="button"
           className={`${
             activePage === i
               ? 'tw-pointer-events-none tw-flex tw-h-8 tw-w-8 tw-select-none tw-items-center tw-justify-center tw-rounded-full tw-border-2 tw-border-yellow-500  tw-bg-gray-500 tw-bg-opacity-50 tw-px-2 tw-py-1 tw-text-center tw-text-sm tw-font-medium tw-text-white'
@@ -40,7 +41,7 @@ const Pagination: React.FC<Props> = ({ activePage, pages, setActivePage }) => {
         ${activePage === 1 ? 'tw-cursor-not-allowed tw-opacity-50' : ''}`}
         onClick={() => activePage !== 1 && setActivePage((page) => page - 1)}
       >
-        <ChevronLeftIcon />
+        <ChevronLeftIcon role="button" data-testid="pagination-previous" />
       </div>
       {getPages()}
       <div
@@ -53,7 +54,7 @@ const Pagination: React.FC<Props> = ({ activePage, pages, setActivePage }) => {
           activePage !== pages && setActivePage((page) => page + 1)
         }
       >
-        <ChevronRightIcon />
+        <ChevronRightIcon role="button" data-testid="pagination-next" />
       </div>
     </div>
   );

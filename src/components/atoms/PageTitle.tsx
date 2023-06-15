@@ -8,12 +8,12 @@ const PageTitle: React.FC<Props> = ({ title }: Props) => {
   const pages = [
     {
       title: 'Home',
-      icon: <HomeIcon />,
+      icon: <HomeIcon data-testid="home-icon" />,
       href: '/',
     },
     {
       title: 'Search Movies',
-      icon: <SearchIcon />,
+      icon: <SearchIcon data-testid="search-icon" />,
       href: '/search',
     },
   ];
