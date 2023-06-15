@@ -81,7 +81,7 @@ const useSearchQuery = (
     select,
   });
 
-const useSearch = (search: string, page: number) =>
+export const useSearch = (search: string, page: number) =>
   useSearchQuery({ search, page }, (data) => {
     const items = data.data.results.map((item: IMovieItem) => ({
       id: item.id,
