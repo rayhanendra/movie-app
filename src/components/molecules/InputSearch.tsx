@@ -3,7 +3,7 @@ import { SearchIcon } from 'lucide-react';
 
 type Props = {
   search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setSearch: (search: string) => void;
 };
 
 const InputSearch: React.FC<Props> = ({ search, setSearch }) => {

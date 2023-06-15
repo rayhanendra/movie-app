@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 type Props = {
   activePage: number;
   pages: number;
-  setActivePage: React.Dispatch<React.SetStateAction<number>>;
+  setActivePage: (page: number) => void;
 };
 
 const Pagination: React.FC<Props> = ({ activePage, pages, setActivePage }) => {
@@ -39,7 +39,7 @@ const Pagination: React.FC<Props> = ({ activePage, pages, setActivePage }) => {
         className={`
             tw-mr-4 tw-flex tw-h-8 tw-w-8 tw-cursor-pointer tw-items-center tw-justify-center tw-rounded-full tw-bg-[#151821] tw-text-white
         ${activePage === 1 ? 'tw-cursor-not-allowed tw-opacity-50' : ''}`}
-        onClick={() => activePage !== 1 && setActivePage((page) => page - 1)}
+        onClick={() => activePage !== 1 && setActivePage(activePage - 1)}
       >
         <ChevronLeftIcon role="button" data-testid="pagination-previous" />
       </div>
@@ -50,9 +50,7 @@ const Pagination: React.FC<Props> = ({ activePage, pages, setActivePage }) => {
             tw-ml-4 tw-flex tw-h-8 tw-w-8 tw-cursor-pointer tw-items-center tw-justify-center tw-rounded-full tw-bg-[#151821] tw-text-white
         
         ${activePage === pages ? 'tw-cursor-not-allowed tw-opacity-50' : ''}`}
-        onClick={() =>
-          activePage !== pages && setActivePage((page) => page + 1)
-        }
+        onClick={() => activePage !== pages && setActivePage(activePage + 1)}
       >
         <ChevronRightIcon role="button" data-testid="pagination-next" />
       </div>

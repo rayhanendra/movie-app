@@ -1,5 +1,5 @@
 import { useDebounce } from '@/hooks/useDebounce';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import InputSearch from '@/components/molecules/InputSearch';
 import movieService from '@/services/movie.service';
 import { useQuery } from '@tanstack/react-query';
@@ -7,25 +7,45 @@ import Pagination from '@/components/molecules/Pagination';
 import CardGrid from '@/components/organisms/CardGrid';
 import PageTitle from '@/components/atoms/PageTitle';
 import useScrollToTop from '@/hooks/useScrollToTop';
+import { useSearchParams } from 'react-router-dom';
+import useSearchPageStore from '@/store/searchPageStore';
 
 function SearchPage() {
-  const { search, setSearch, handleOnSubmit } = useSearchHandler();
-  const debouncedSearch = useDebounce(search, 250);
+  const [, setSearchParams] = useSearchParams();
 
-  const { activePage, setActivePage } = usePage(debouncedSearch);
-  const { data, isLoading } = useSearch(debouncedSearch, activePage);
-  const { data: pagination } = usePagination(debouncedSearch, activePage);
-  useScrollToTop(activePage);
+  // Note: Store
+  const { search: searchStore, activePage: activePageStore } =
+    useSearchPageStore((state) => state);
+  const setSearchStore = useSearchPageStore((state) => state.setSearch);
+  const setActivePageStore = useSearchPageStore((state) => state.setActivePage);
+
+  // Note: Debounce
+  const debouncedSearch = useDebounce(searchStore, 500);
+
+  // Note: Query
+  const { data, isLoading } = useSearch(debouncedSearch, activePageStore);
+  const pagination = usePagination(debouncedSearch, activePageStore);
+
+  // Note: Custom Hooks
+  useSearchPageEffect({
+    searchStore,
+    activePageStore,
+    setSearchStore,
+    setActivePageStore,
+    debouncedSearch,
+  });
 
   return (
     <>
-      <div className="tw-p-4">
-        <PageTitle title="Search Movies" />
-      </div>
+      <PageTitle title="Search Movies" />
       <div className="tw-sticky tw-top-0 tw-z-50  tw-bg-[#151821] tw-p-4">
-        <form onSubmit={handleOnSubmit}>
-          <InputSearch search={search} setSearch={setSearch} />
-        </form>
+        <InputSearch
+          search={searchStore}
+          setSearch={(search: string) => {
+            setSearchParams({ query: search, page: '1' });
+            setSearchStore(search);
+          }}
+        />
       </div>
       <div className="md:tw-px-4">
         <div className="tw-bg-yellow-400 tw-px-4 tw-text-xs tw-text-[#151821]">
@@ -35,65 +55,34 @@ function SearchPage() {
       <div className="tw-p-4">
         <CardGrid data={data} isLoading={isLoading} />
       </div>
-
-      <div className="tw-mb-32">
+      <div className="tw-pb-28">
         <Pagination
-          activePage={activePage}
-          setActivePage={setActivePage}
-          pages={pagination?.total_pages || 1}
+          activePage={activePageStore}
+          setActivePage={setActivePageStore}
+          pages={pagination.data?.total_pages || 1}
         />
       </div>
     </>
   );
 }
 
-const useSearchHandler = () => {
-  const [search, setSearch] = React.useState<string>('');
+export default SearchPage;
 
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSearch(e.currentTarget.search.value);
-  };
-
-  return {
-    search,
-    setSearch,
-    handleOnSubmit,
-  };
-};
-
-const usePage = (debouncedSearch: string) => {
-  const [activePage, setActivePage] = React.useState(1);
-
-  useEffect(() => {
-    if (debouncedSearch) {
-      setActivePage(1);
-    }
-  }, [debouncedSearch]);
-
-  return {
-    activePage,
-    setActivePage,
-  };
-};
-
-// Note: This is a custom hook to implement select partial subsriptions
+// Note: This is a custom hook to implement select partial subscriptions
 const useSearchQuery = (
-  { debouncedSearch, page }: { debouncedSearch: string; page: number },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { search, page }: { search: string; page: number },
   select: (data: any) => any,
 ) =>
   useQuery({
-    queryKey: ['search', debouncedSearch, page],
+    queryKey: ['search', search, page],
     queryFn: async () => {
-      return await movieService.getSearch(debouncedSearch, page);
+      return await movieService.getSearch(search, page);
     },
     select,
   });
 
-// Note: Hook for search and return search results
-export const useSearch = (debouncedSearch: string, page: number) =>
-  useSearchQuery({ debouncedSearch, page }, (data) => {
+const useSearch = (search: string, page: number) =>
+  useSearchQuery({ search, page }, (data) => {
     const items = data.data.results.map((item: IMovieItem) => ({
       id: item.id,
       title: item.title,
@@ -104,10 +93,9 @@ export const useSearch = (debouncedSearch: string, page: number) =>
     return items;
   });
 
-// Note: Hook for search and return pagination
-const usePagination = (debouncedSearch: string, page: number) =>
-  useSearchQuery({ debouncedSearch, page }, (data) => {
-    const { page, total_pages, total_results } = data.data || {};
+const usePagination = (search: string, page: number) =>
+  useSearchQuery({ search, page }, (data) => {
+    const { page, total_pages, total_results } = data?.data || {};
     return {
       page: page || 1,
       total_pages: total_pages || 1,
@@ -115,4 +103,50 @@ const usePagination = (debouncedSearch: string, page: number) =>
     };
   });
 
-export default SearchPage;
+const useSearchPageEffect = ({
+  searchStore,
+  activePageStore,
+  setSearchStore,
+  setActivePageStore,
+  debouncedSearch,
+}: {
+  searchStore: string;
+  activePageStore: number;
+  setSearchStore: (search: string) => void;
+  setActivePageStore: (page: number) => void;
+  debouncedSearch: string;
+}) => {
+  const [, setSearchParams] = useSearchParams();
+
+  // Note: Scroll to top when page change
+  useScrollToTop(activePageStore);
+
+  // Note: Set search params when search
+  useEffect(() => {
+    if (activePageStore) {
+      setSearchParams({
+        query: debouncedSearch,
+        page: activePageStore.toString(),
+      });
+      setSearchStore(debouncedSearch);
+      setActivePageStore(activePageStore);
+    }
+  }, [activePageStore]);
+
+  // Note: Reset page when search
+  useEffect(() => {
+    if (!searchStore) {
+      setSearchParams('', { replace: true });
+      setSearchStore('');
+      setActivePageStore(1);
+    }
+  }, [searchStore, activePageStore]);
+
+  // Note: Reset search and page when unmount
+  useEffect(() => {
+    return () => {
+      setSearchStore('');
+      setActivePageStore(1);
+    };
+  }, []);
+};
