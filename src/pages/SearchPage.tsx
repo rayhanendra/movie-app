@@ -1,5 +1,5 @@
 import { useDebounce } from '@/hooks/useDebounce';
-import React from 'react';
+import React, { useEffect } from 'react';
 import InputSearch from '@/components/molecules/InputSearch';
 import movieService from '@/services/movie.service';
 import { useQuery } from '@tanstack/react-query';
@@ -9,18 +9,13 @@ import PageTitle from '@/components/atoms/PageTitle';
 import useScrollToTop from '@/hooks/useScrollToTop';
 
 function SearchPage() {
-  const [search, setSearch] = React.useState<string>('');
-  const [activePage, setActivePage] = React.useState(1);
-
+  const { search, setSearch, handleOnSubmit } = useSearchHandler();
   const debouncedSearch = useDebounce(search, 250);
+
+  const { activePage, setActivePage } = usePage(debouncedSearch);
   const { data, isLoading } = useSearch(debouncedSearch, activePage);
   const { data: pagination } = usePagination(debouncedSearch, activePage);
   useScrollToTop(activePage);
-
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSearch(e.currentTarget.search.value);
-  };
 
   return (
     <>
@@ -32,8 +27,10 @@ function SearchPage() {
           <InputSearch search={search} setSearch={setSearch} />
         </form>
       </div>
-      <div className="tw-bg-yellow-400 tw-px-4 tw-py-1  tw-text-sm tw-text-[#151821]">
-        Search Results
+      <div className="md:tw-px-4">
+        <div className="tw-bg-yellow-400 tw-px-4 tw-text-xs tw-text-[#151821]">
+          Search Results
+        </div>
       </div>
       <div className="tw-p-4">
         <CardGrid data={data} isLoading={isLoading} />
@@ -50,6 +47,36 @@ function SearchPage() {
   );
 }
 
+const useSearchHandler = () => {
+  const [search, setSearch] = React.useState<string>('');
+
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearch(e.currentTarget.search.value);
+  };
+
+  return {
+    search,
+    setSearch,
+    handleOnSubmit,
+  };
+};
+
+const usePage = (debouncedSearch: string) => {
+  const [activePage, setActivePage] = React.useState(1);
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      setActivePage(1);
+    }
+  }, [debouncedSearch]);
+
+  return {
+    activePage,
+    setActivePage,
+  };
+};
+
 // Note: This is a custom hook to implement select partial subsriptions
 const useSearchQuery = (
   { debouncedSearch, page }: { debouncedSearch: string; page: number },
@@ -59,9 +86,8 @@ const useSearchQuery = (
   useQuery({
     queryKey: ['search', debouncedSearch, page],
     queryFn: async () => {
-      return movieService.getSearch(debouncedSearch, page);
+      return await movieService.getSearch(debouncedSearch, page);
     },
-    keepPreviousData: true,
     select,
   });
 
