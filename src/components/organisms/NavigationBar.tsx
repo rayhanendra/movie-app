@@ -1,6 +1,6 @@
 import React from 'react';
-import { HomeIcon, SearchIcon, CircleEllipsisIcon } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+
+import useNavigations from '@/hooks/useNavigations';
 
 const NavigationBar: React.FC = () => {
   const { navigations, location, handleClick } = useNavigations();
@@ -38,35 +38,6 @@ const NavigationBar: React.FC = () => {
       </div>
     </div>
   );
-};
-
-const useNavigations = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const navigations = [
-    {
-      icon: <HomeIcon size={18} />,
-      name: 'Home',
-      link: '/',
-    },
-    {
-      icon: <SearchIcon size={18} />,
-      name: 'Search',
-      link: '/search',
-    },
-    {
-      icon: <CircleEllipsisIcon size={18} />,
-      name: 'Other',
-      link: '/other',
-    },
-  ];
-
-  const handleClick = (link: string) => {
-    navigate(link);
-  };
-
-  return { navigations, handleClick, location };
 };
 
 export default NavigationBar;
