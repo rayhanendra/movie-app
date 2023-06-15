@@ -8,6 +8,10 @@ class MovieService {
   getSearch(query: string, page: number) {
     return api.get(`/search/movie?query=${query}&language=en-US&page=${page}`);
   }
+
+  getDetail(id: string | undefined) {
+    return api.get(`/movie/${id}?language=en-US`);
+  }
 }
 
 export default new MovieService();

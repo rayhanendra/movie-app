@@ -1,9 +1,11 @@
 import React from 'react';
 import { StarIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   name?: string;
   type?: 'list' | 'grid';
+  id: number;
   title: string;
   image: string;
   rating: number;
@@ -11,10 +13,17 @@ type Props = {
 const Card: React.FC<Props> = ({
   name,
   type = 'list',
+  id,
   title,
   image,
   rating,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (id: number) => {
+    navigate(`/detail/${id}`);
+  };
+
   return (
     <div
       className={`${
@@ -23,7 +32,8 @@ const Card: React.FC<Props> = ({
           : type === 'grid'
           ? 'tw-w-full'
           : ''
-      } tw-relative tw-h-32 tw-flex-shrink-0 tw-rounded-xl md:tw-h-64`}
+      } tw-relative tw-h-32 tw-flex-shrink-0 tw-cursor-pointer tw-rounded-xl md:tw-h-64`}
+      onClick={() => handleClick(id)}
     >
       <img
         className="tw-absolute -tw-z-10 tw-h-full tw-w-full tw-rounded-xl tw-object-cover"

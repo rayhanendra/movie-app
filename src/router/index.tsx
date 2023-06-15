@@ -1,3 +1,4 @@
+import DetailPage from '@/pages/DetailPage';
 import HomePage from '@/pages/HomePage';
 import OtherPage from '@/pages/OtherPage';
 import SearchPage from '@/pages/SearchPage';
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: '/other',
         element: <OtherPage />,
+      },
+      {
+        path: '/detail/:movieId',
+        element: <DetailPage />,
       },
     ],
   },
