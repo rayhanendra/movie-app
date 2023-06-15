@@ -9,18 +9,16 @@ const PageTitle: React.FC<Props> = ({ title }: Props) => {
     {
       title: 'Home',
       icon: <HomeIcon data-testid="home-icon" />,
-      href: '/',
     },
     {
       title: 'Search Movies',
       icon: <SearchIcon data-testid="search-icon" />,
-      href: '/search',
     },
   ];
 
   return (
-    <div className="tw-flex tw-items-center tw-gap-4 tw-rounded-lg tw-bg-gray-500 tw-bg-opacity-10 tw-p-4 tw-py-4 tw-backdrop-blur-lg tw-backdrop-filter ">
-      <div className="tw-text-white-900tw-text-lg tw-font-bold md:tw-text-lg">
+    <div className="tw-backgdrop-filter tw-flex tw-items-center tw-gap-4 tw-rounded-b-3xl tw-bg-slate-600 tw-bg-opacity-5 tw-p-6 tw-backdrop-blur-lg">
+      <div className="tw-text-white-900 tw-text-lg tw-font-bold md:tw-text-3xl">
         {title}
       </div>
       {pages.find((page) => page.title === title)?.icon}
