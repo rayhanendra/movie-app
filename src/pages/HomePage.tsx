@@ -2,15 +2,17 @@ import PageTitle from '@/components/atoms/PageTitle';
 import Trending from '@/components/organisms/Trending';
 import React from 'react';
 
-const HomePage: React.FC = () => {
+function HomePage() {
   return (
     <div>
-      <div className="tw-p-4">
-        <PageTitle title="Home" />
-      </div>
+      <PageTitle title="Home" />
+      <Trending />
+      <Trending />
+      <Trending />
+      <Trending />
       <Trending />
     </div>
   );
-};
+}
 
 export default HomePage;
