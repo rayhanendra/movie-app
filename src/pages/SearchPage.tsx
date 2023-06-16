@@ -143,10 +143,10 @@ const useSearchPageEffect = ({
   }, [searchStore, activePageStore]);
 
   // Note: Reset search and page when unmount
-  useEffect(() => {
-    return () => {
-      setSearchStore('');
-      setActivePageStore(1);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     setSearchStore('');
+  //     setActivePageStore(1);
+  //   };
+  // }, []);
 };
