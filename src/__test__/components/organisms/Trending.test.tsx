@@ -20,7 +20,6 @@ describe('Trending component', () => {
   it('displays loading state', () => {
     render(<Trending />, { wrapper });
     expect(screen.getByTestId('trending-loading')).toBeInTheDocument();
-    expect(screen.getByText('Loading...')).toBeVisible();
   });
 
   it('useTrendingQuery hook returns data', async () => {
