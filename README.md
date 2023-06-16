@@ -150,3 +150,5 @@ Use `yarn coverage` to run tests coverage
 ## Improvements
 
 - I would like to add more tests.
+- I would like to tweek the UI a bit more.
+- I would like to implement skeleton loading.
