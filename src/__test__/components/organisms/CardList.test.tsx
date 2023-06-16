@@ -2,6 +2,7 @@
 // @ts-nocheck
 import { render, screen } from '@testing-library/react';
 import CardList from '@/components/organisms/CardList';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('CardList component', () => {
   it('renders Card components', () => {
@@ -20,7 +21,9 @@ describe('CardList component', () => {
       },
     ];
 
-    render(<CardList name="trending" data={data} />);
+    render(<CardList name="trending" data={data} />, {
+      wrapper: MemoryRouter,
+    });
 
     data.forEach((item) => {
       expect(screen.getByText(item.title)).toBeInTheDocument();
@@ -33,7 +36,9 @@ describe('CardList component', () => {
   });
 
   it('renders null when data is not provided', () => {
-    render(<CardList name="trending" data={null} />);
+    render(<CardList name="trending" data={null} />, {
+      wrapper: MemoryRouter,
+    });
 
     expect(screen.queryByTestId('trendings-wrapper')).not.toBeInTheDocument();
   });

@@ -1,6 +1,7 @@
 import { render, renderHook, waitFor } from '@testing-library/react';
 import SearchPage, { useSearch } from '@/pages/SearchPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MemoryRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,7 +12,9 @@ const queryClient = new QueryClient({
 });
 
 const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  <QueryClientProvider client={queryClient}>
+    <MemoryRouter>{children}</MemoryRouter>
+  </QueryClientProvider>
 );
 
 export default wrapper;

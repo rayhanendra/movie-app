@@ -1,5 +1,6 @@
 import Card from '@/components/molecules/Card';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Card component', () => {
   it('renders Card component', () => {
@@ -19,6 +20,9 @@ describe('Card component', () => {
         image={data.image}
         rating={data.rating}
       />,
+      {
+        wrapper: MemoryRouter,
+      },
     );
 
     expect(screen.getByText(data.title)).toBeInTheDocument();
