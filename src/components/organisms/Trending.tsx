@@ -1,11 +1,17 @@
 import CardList from './CardList';
 import { useQuery } from '@tanstack/react-query';
 import movieService from '@/services/movie.service';
+import Loader from '@/components/atoms/Loader';
 
 const Trending = () => {
   const { isLoading, data } = useTrendingQuery();
 
-  if (isLoading) return <div data-testid="trending-loading">Loading...</div>;
+  if (isLoading)
+    return (
+      <div data-testid="trending-loading">
+        <Loader />
+      </div>
+    );
 
   return (
     <div className="tw-px-4">
