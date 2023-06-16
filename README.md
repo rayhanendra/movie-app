@@ -129,7 +129,7 @@ Use `yarn coverage` to run tests coverage
 - I created a search bar and a list of Card components to display the search results.
 - I used React Query to fetch the search results from the TMDB API.
 - The searched movies are stored in the query params and zustand store so that the search results are persisted and not lost when the page is refreshed. It also works the same with the pagination.
-- I remove all the search data from store when the user navigates away from the search page or when the search page component is unmounted.
+<!-- - I remove all the search data from store when the user navigates away from the search page or when the search page component is unmounted. -->
 - I used React Router to navigate to the movie details page when a movie is clicked.
 
 ### Movie Details Page
