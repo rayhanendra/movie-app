@@ -5,6 +5,13 @@ interface ITrending {
   rating: number;
 }
 
+interface IMovieItem {
+  id: string;
+  title: string;
+  image: string;
+  rating: number;
+}
+
 interface IMovieDetail {
   title: string;
   overview: string;

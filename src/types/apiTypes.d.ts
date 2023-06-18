@@ -1,5 +1,5 @@
-interface IMovieItem {
-  id: number;
+interface IApiMovieItem {
+  id: string;
   title: string;
   overview: string;
   backdrop_path: string;

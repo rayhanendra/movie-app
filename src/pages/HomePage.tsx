@@ -1,14 +1,12 @@
 import PageTitle from '@/components/atoms/PageTitle';
+import NowPlaying from '@/components/organisms/NowPlaying';
 import Trending from '@/components/organisms/Trending';
 
 function HomePage() {
   return (
     <div>
       <PageTitle title="Home" />
-      <Trending />
-      <Trending />
-      <Trending />
-      <Trending />
+      <NowPlaying />
       <Trending />
     </div>
   );

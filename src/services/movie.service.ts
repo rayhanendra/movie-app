@@ -12,6 +12,14 @@ class MovieService {
   getDetail(id: string | undefined) {
     return api.get(`/movie/${id}?language=en-US`);
   }
+
+  getNowPlaying() {
+    return api.get('/movie/now_playing?language=en-US');
+  }
+
+  getVideos(id: string | undefined) {
+    return api.get(`/movie/${id}/videos?language=en-US`);
+  }
 }
 
 export default new MovieService();
