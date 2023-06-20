@@ -19,3 +19,11 @@ interface IMovieDetail {
   releaseDate: string;
   rating: number;
 }
+
+interface IVideo {
+  id: string;
+  name: string;
+  type: string;
+  site: string;
+  key: string;
+}

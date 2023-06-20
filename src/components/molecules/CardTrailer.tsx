@@ -81,7 +81,7 @@ const CardTrailer: React.FC<Props> = ({
 
 export default CardTrailer;
 
-const useModal = (data: any) => {
+const useModal = (data: IVideo | undefined) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const showModal = (key: string) => {
@@ -143,13 +143,7 @@ const useVideosQuery = (id: string) =>
     queryFn: () => movieService.getVideos(id),
     select(data) {
       const result = data.data.results.filter(
-        (item: {
-          type: string;
-          name: string;
-          id: string;
-          key: string;
-          site: string;
-        }) =>
+        (item: IApiVideo) =>
           (item.type === 'Trailer' && item.name === 'Official Trailer') ||
           item.name === 'Official Trailer',
       );
