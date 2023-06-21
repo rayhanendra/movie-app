@@ -12,7 +12,7 @@ const CardList: React.FC<Props> = ({ name, data }) => {
   return (
     <div
       data-testid={`${name}s-wrapper`}
-      className="no-scrollbar tw-flex tw-items-center tw-space-x-4 tw-overflow-x-auto tw-pb-4"
+      className="base-scrollbar tw-flex tw-items-center tw-space-x-4 tw-overflow-x-auto tw-pb-4"
     >
       {data.map((item, index) => (
         <Card name={name} key={index} {...item} />
