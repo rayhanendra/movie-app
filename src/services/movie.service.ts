@@ -20,6 +20,10 @@ class MovieService {
   getVideos(id: string | undefined) {
     return api.get(`/movie/${id}/videos?language=en-US`);
   }
+
+  getPopular() {
+    return api.get('/movie/popular?language=en-US');
+  }
 }
 
 export default new MovieService();
