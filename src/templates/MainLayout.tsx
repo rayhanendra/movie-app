@@ -8,7 +8,7 @@ const MainLayout: React.FC = () => {
   return (
     <>
       <ScrollToTop />
-      <div className="tw-h-screen md:tw-container md:tw-mx-auto md:tw-grid md:tw-grid-cols-12 md:tw-space-x-2">
+      <div className="tw-mb-40 tw-h-screen md:tw-container md:tw-mx-auto md:tw-grid md:tw-grid-cols-12 md:tw-space-x-2">
         <div className="tw-hidden md:tw-col-span-2 md:tw-block">
           <SideBar />
         </div>

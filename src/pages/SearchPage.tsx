@@ -83,7 +83,7 @@ const useSearchQuery = (
 
 export const useSearch = (search: string, page: number) =>
   useSearchQuery({ search, page }, (data) => {
-    const items = data.data.results.map((item: IMovieItem) => ({
+    const items = data.data.results.map((item: IApiMovieItem) => ({
       id: item.id,
       title: item.title,
       image: `https://www.themoviedb.org/t/p/w1280${item.backdrop_path}`,
