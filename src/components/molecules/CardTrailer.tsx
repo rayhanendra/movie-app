@@ -149,11 +149,11 @@ const useVideosQuery = (id: string) =>
       );
       const item = result[0];
       const movie = {
-        id: item.id,
-        key: item.key,
-        name: item.name,
-        site: item.site,
-        type: item.type,
+        id: item?.id,
+        key: item?.key,
+        name: item?.name,
+        site: item?.site,
+        type: item?.type,
       };
 
       return movie;

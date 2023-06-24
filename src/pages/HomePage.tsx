@@ -7,9 +7,11 @@ function HomePage() {
   return (
     <div>
       <PageTitle title="Home" />
-      <NowPlaying />
-      <Trending />
-      <Popular />
+      <div className="tw-mb-10 tw-flex tw-flex-col md:tw-gap-6">
+        <NowPlaying />
+        <Trending />
+        <Popular />
+      </div>
     </div>
   );
 }
