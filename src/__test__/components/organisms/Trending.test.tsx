@@ -23,7 +23,7 @@ describe('Trending component', () => {
   });
 
   it('useTrendingQuery hook returns data', async () => {
-    const { result } = renderHook(() => useTrendingQuery(), {
+    const { result } = renderHook(() => useTrendingQuery('day'), {
       wrapper,
     });
 
